@@ -1,12 +1,13 @@
-import React from 'react'
+import React from 'react';
+import Navbar from './components/Navbar.jsx';
 
 function App() {
-
   return (
     <>
-      Hii
+    <Navbar />
     </>
-  )
+    
+  );
 }
 
-export default App
+export default App;
