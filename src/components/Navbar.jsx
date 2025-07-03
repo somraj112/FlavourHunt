@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import Login from "./Login";
+
 
 function Navbar(){
   const [isOpen, setIsOpen] = useState(false);
@@ -25,6 +27,11 @@ function Navbar(){
                 {link}
               </a>
             ))}
+            <button
+              onClick={Login}
+              className="px-4 py-2 bg-orange-600 text-white font-semibold rounded-md hover:bg-orange-700 transition-colors duration-200"> 
+              Login
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
