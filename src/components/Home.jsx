@@ -1,5 +1,6 @@
 import Login from "./Login.jsx";
 const Hero = () => {
+  console.log("Hero component rendered");
     return (
       <section
         className="bg-cover bg-center bg-no-repeat py-20"
