@@ -1,4 +1,4 @@
-import Login from "./Login.jsx";
+import {Link} from 'react-router-dom';
 const Hero = () => {
   console.log("Hero component rendered");
     return (
@@ -19,19 +19,19 @@ const Hero = () => {
               Browse through thousands of tasty recipes, learn from culinary experts, and bring joy to your kitchen.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <a
-                href="/blogs"
+              <Link
+                to="/blogs"
                 className="px-6 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition"
               >
                 Explore Blog
-              </a>
-              <a
-                href="/get-started"
+              </Link>
+              <Link
+                to="/signup"
                 className="px-6 py-3 border border-green-600 text-green-600 font-semibold rounded-full hover:bg-green-100 transition"
-                onClick={Login}
+                
               >
                 Get Started
-              </a>
+              </Link>
             </div>
           </div>
   
@@ -44,7 +44,7 @@ const Hero = () => {
             />
           </div>
         </div>
-        {/* Section for Expert-Curated Recipes and Cooking Tips & Tricks */}
+        {/* Expert-Curated Recipes */}
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
             {/* Expert-Curated Recipes Card */}
             <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
@@ -63,7 +63,7 @@ const Hero = () => {
         <div className="max-w-7xl mx-auto px-6 mt-10">
             <h2 className="text-7xl md:text-4xl font-bold text-gray-900 mb-8 text-center">What Our Community Says</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {/* Testimonial 1 */}
+                {/*  Feedback 1 */}
                 <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg flex flex-col items-center text-center">
                     <img
                         src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D"
@@ -77,7 +77,7 @@ const Hero = () => {
                     </p>
                 </div>
 
-                {/* Testimonial 2 */}
+                {/* Feedback 2 */}
                 <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg flex flex-col items-center text-center">
                     <img
                         src="https://media.istockphoto.com/id/488961367/photo/homemade-cooking.jpg?s=612x612&w=0&k=20&c=TXva5xmIdFTm9swVVomLYHfnM_UOw1YpkpkBcb_oy8I="
@@ -91,7 +91,7 @@ const Hero = () => {
                     </p>
                 </div>
 
-                {/* Testimonial 3 */}
+                {/* Feedback 3 */}
                 <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg flex flex-col items-center text-center">
                     <img
                         src="https://img.freepik.com/free-photo/portrait-smiling-blonde-woman_23-2148316635.jpg?semt=ais_hybrid&w=740"
