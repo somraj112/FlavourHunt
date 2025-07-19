@@ -20,7 +20,7 @@ const Hero = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Link
-                to="/blogs"
+                to="/blog"
                 className="px-6 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition"
               >
                 Explore Blog
