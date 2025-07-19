@@ -1,86 +1,126 @@
-import React from 'react'
-
-import { useEffect, useState } from 'react';
-// import { useFirebase } from '../path/to/FirebaseContext'; // If recipes are user-specific or require auth
+import { useEffect, useState } from "react";
 
 const Recipes = () => {
-    const [recipes, setRecipes] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    // const { userId, isAuthReady } = useFirebase(); // If you need user ID or auth status
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const recipesPerPage = 12;
 
-    useEffect(() => {
-        const fetchRecipes = async () => {
-            // You'll need to replace this with your actual API endpoint and API key
-            const API_URL = 'YOUR_RECIPE_API_ENDPOINT'; // e.g., 'https://api.spoonacular.com/recipes/complexSearch'
-            const API_KEY = 'YOUR_API_KEY'; // Get this from your chosen API provider
+  const API_KEY =
+    import.meta.env.VITE_SPOONACULAR_API_KEY ||
+    "3b52ff80550f419aa46ca62d16d4ef43";
 
-            try {
-                setLoading(true);
-                
-                // const response = await fetch(`${API_URL}?apiKey=${API_KEY}&query=pasta&number=9`);
-                // const data = await response.json();
-                // setRecipes(data.results); // Adjust based on API response structure
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const res = await fetch(
+          `https://api.spoonacular.com/recipes/random?number=100&apiKey=${API_KEY}`
+        );
+        const data = await res.json();
+        setRecipes(data.recipes || []);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching recipes", err);
+        setLoading(false);
+      }
+    };
 
-                // If you don't have an API key yet, you can use this structure
-                const dummyRecipes = [
-                    { id: 1, title: 'Spicy Chicken Curry', image: 'https://placehold.co/300x200/FF5733/FFFFFF?text=Curry', description: 'A fiery and flavorful chicken curry recipe.' },
-                    { id: 2, title: 'Vegetable Lasagna', image: 'https://placehold.co/300x200/33FF57/FFFFFF?text=Lasagna', description: 'Classic Italian lasagna with layers of fresh vegetables.' },
-                    { id: 3, title: 'Chocolate Lava Cake', image: 'https://placehold.co/300x200/8A2BE2/FFFFFF?text=Dessert', description: 'Rich, molten chocolate cake for dessert lovers.' },
-                    { id: 4, title: 'Healthy Smoothie Bowl', image: 'https://placehold.co/300x200/33A0FF/FFFFFF?text=Smoothie', description: 'A refreshing and nutritious breakfast bowl.' },
-                    { id: 5, title: 'Homemade Pizza', image: 'https://placehold.co/300x200/FFC300/FFFFFF?text=Pizza', description: 'Craft your perfect pizza from scratch.' },
-                    { id: 6, title: 'Classic Tomato Soup', image: 'https://placehold.co/300x200/DAF7A6/FFFFFF?text=Soup', description: 'Comforting and easy-to-make tomato soup.' },
-                ];
-                setRecipes(dummyRecipes);
+    fetchRecipes();
+  }, []);
 
-            } catch (err) {
-                setError("Failed to fetch recipes. Please try again later.");
-                console.error("API fetch error:", err);
-            } finally {
-                setLoading(false);
-            }
-        };
+  const indexOfLast = currentPage * recipesPerPage;
+  const indexOfFirst = indexOfLast - recipesPerPage;
+  const currentRecipes = recipes.slice(indexOfFirst, indexOfLast);
+  const totalPages = Math.ceil(recipes.length / recipesPerPage);
 
-        fetchRecipes();
-    }, []); 
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    if (loading) {
-        return <div className="min-h-screen bg-green-50 flex items-center justify-center text-xl text-gray-700">Loading Recipes...</div>;
-    }
-
-    if (error) {
-        return <div className="min-h-screen bg-green-50 flex items-center justify-center text-xl text-red-500">{error}</div>;
-    }
-
+  if (loading) {
     return (
-        <div className="min-h-screen bg-green-50 p-8">
-            <div className="max-w-7xl mx-auto">
-                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 text-center">Our Delicious Recipes</h1>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {recipes.map(recipe => (
-                        <div key={recipe.id} className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
-                            <img
-                                src={recipe.image}
-                                alt={recipe.title}
-                                className="w-full h-48 object-cover"
-                                onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/300x200/CCCCCC/333333?text=Recipe"; }} // Fallback
-                            />
-                            <div className="p-4">
-                                <h2 className="text-xl font-semibold text-gray-900 mb-2">{recipe.title}</h2>
-                                <p className="text-gray-700 text-sm">{recipe.description}</p>
-                                <button className="mt-4 px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 transition">
-                                    View Recipe
-                                </button>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
+      <div className="text-center mt-10 text-xl text-orange-500 font-medium">
+        Loading delicious recipes for you...
+      </div>
     );
+  }
+
+  return (
+    <div className="p-6 max-w-7xl mx-auto">
+      <h1 className="text-4xl font-bold text-green-700 text-center mb-10">
+        Explore Recipes
+      </h1>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        {currentRecipes.map((recipe) => (
+          <div
+            key={recipe.id}
+            className="bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300 flex flex-col"
+          >
+            <img
+              src={recipe.image}
+              alt={recipe.title}
+              className="w-full h-52 object-cover rounded-t-2xl"
+            />
+
+            <div className="p-5 flex flex-col flex-grow">
+              <h2 className="text-lg font-bold text-green-800 mb-2 line-clamp-2">
+                {recipe.title}
+              </h2>
+
+              <div className="text-sm text-gray-600 mb-4">
+                ⏱️ Ready in {recipe.readyInMinutes} minutes
+              </div>
+
+              <a
+                href={`https://spoonacular.com/recipes/${recipe.title
+                  .toLowerCase()
+                  .replace(/ /g, "-")}-${recipe.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-auto inline-block bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition-colors text-center"
+              >
+                View Recipe →
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Pagination */}
+      <div className="mt-10 flex justify-center items-center space-x-2">
+        <button
+          onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
+          className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg disabled:opacity-50"
+          disabled={currentPage === 1}
+        >
+          ← Previous
+        </button>
+
+        {[...Array(totalPages)].map((_, index) => (
+          <button
+            key={index}
+            onClick={() => paginate(index + 1)}
+            className={`px-3 py-1 rounded-full border ${
+              currentPage === index + 1
+                ? "bg-orange-500 text-white"
+                : "bg-white text-green-700 border-green-500 hover:bg-green-100"
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
+
+        <button
+          onClick={() =>
+            currentPage < totalPages && setCurrentPage(currentPage + 1)
+          }
+          className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg disabled:opacity-50"
+          disabled={currentPage === totalPages}
+        >
+          Next →
+        </button>
+      </div>
+    </div>
+  );
 };
 
-
-
 export default Recipes;
-
