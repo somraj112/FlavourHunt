@@ -35,7 +35,7 @@ const RecipeBlog = () => {
       {recipes.map((recipe) => (
         <div
           key={recipe.id}
-          className="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-gray-100"
+          className="rounded-2xl shadow-lg p-6 mb-8 border border-gray-100 bg-gray-100"
         >
           <div className="flex justify-between items-start mb-4">
             <h2 className="text-xl font-bold text-green-600">{recipe.name}</h2>
@@ -51,13 +51,13 @@ const RecipeBlog = () => {
 
           {/* Left */}
           <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-4">
-            <span className="bg-gray-100 px-2 py-1 rounded">
+            <span className="bg-white px-2 py-1 rounded">
               {recipe.cuisine}
             </span>
-            <span className="bg-gray-100 px-2 py-1 rounded">
+            <span className="bg-white px-2 py-1 rounded">
               {recipe.difficulty}
             </span>
-            <span className="bg-gray-100 px-2 py-1 rounded">
+            <span className="bg-white px-2 py-1 rounded">
               {recipe.cookTimeMinutes} mins
             </span>
           </div>
