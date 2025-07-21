@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
+import { auth } from '../firebase'; // adjust path if needed
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +10,7 @@ const SignUp = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     setFormData({ 
@@ -16,11 +19,32 @@ const SignUp = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // integrate Firebase/Auth API/backend
-    console.log('User Data:', formData);
-    setSubmitted(true);
+    setError('');
+
+    try {
+      // Create the user with email and password
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+
+      // Update user profile with the name
+      await updateProfile(userCredential.user, {
+        displayName: formData.name,
+      });
+
+      // Send email verification
+      await sendEmailVerification(userCredential.user);
+
+      // Show verification message
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Signup Error:", err.message);
+      setError(err.message);
+    }
   };
 
   return (
@@ -37,6 +61,13 @@ const SignUp = () => {
         ) : (
           <>
             <h2 className="text-3xl font-bold mb-6 text-green-600 text-center">Create Your Account</h2>
+            
+            {error && (
+              <div className="bg-red-100 text-red-700 p-2 rounded mb-4 text-sm text-center">
+                {error}
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">Full Name</label>

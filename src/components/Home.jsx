@@ -1,12 +1,14 @@
 import {Link} from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+
 const Hero = () => {
+  const { user } = useAuth();
   console.log("Hero component rendered");
     return (
       <section
         className="bg-cover bg-center bg-no-repeat py-20"
         style={{
             backgroundImage: "url('foodpic.png')",
-            // backgroundImage: "url('https://thumbs.dreamstime.com/z/salad-tomatoes-greens-dressing-oil-feta-cheese-blue-plate-white-wooden-background-top-view-banner-website-52717635.jpg?ct=jpeg')",
           }}
       >
         <div className="bg-white/80 backdrop-blur-sm rounded-xl max-w-7xl mx-auto px-6 flex flex-col-reverse lg:flex-row items-center gap-10 shadow-lg py-10">
@@ -25,14 +27,23 @@ const Hero = () => {
               >
                 Explore Blog
               </Link>
+              {/* ✅ Conditional Button */}
+            {user ? (
+              <Link
+                to="/recipes"
+                className="px-6 py-3 border border-green-600 text-green-600 font-semibold rounded-full hover:bg-green-100 transition"
+              >
+                Explore Recipes
+              </Link>
+            ) : (
               <Link
                 to="/signup"
                 className="px-6 py-3 border border-green-600 text-green-600 font-semibold rounded-full hover:bg-green-100 transition"
-                
               >
                 Get Started
               </Link>
-            </div>
+            )}
+          </div>
           </div>
   
           {/* Right Image */}
