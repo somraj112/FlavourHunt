@@ -48,8 +48,8 @@ The contact form allows users to send a message directly from the website. It's 
 
 ## 🙋‍♂️ Author
 Somraj Nandi
-🌐 [GitHub](https://github.com/somraj112)
-💼 [LinkedIn](https://www.linkedin.com/in/somraj-nandi/)
+- 🌐 [GitHub](https://github.com/somraj112)
+- 💼 [LinkedIn](https://www.linkedin.com/in/somraj-nandi/)
 
 ## 📄 License
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
