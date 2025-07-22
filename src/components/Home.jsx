@@ -8,7 +8,7 @@ const Hero = () => {
       <section
         className="bg-cover bg-center bg-no-repeat py-20"
         style={{
-            backgroundImage: "url('foodpic.png')",
+            backgroundImage: "url('https://img.freepik.com/free-vector/thai-cuisine-food-flat-illustration_1284-74042.jpg')",
           }}
       >
         <div className="bg-white/80 backdrop-blur-sm rounded-xl max-w-7xl mx-auto px-6 flex flex-col-reverse lg:flex-row items-center gap-10 shadow-lg py-10">
@@ -27,7 +27,7 @@ const Hero = () => {
               >
                 Explore Blog
               </Link>
-              {/* ✅ Conditional Button */}
+              {/* Conditional Button */}
             {user ? (
               <Link
                 to="/recipes"
